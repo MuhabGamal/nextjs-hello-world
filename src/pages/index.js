@@ -1,7 +1,4 @@
-import { GetServerSideProps } from 'next';
-
-
-export default function Index({ ip }: { ip: string }) {
+export default function Index({ ip }) {
     console.log(ip);
 
     return (
@@ -12,7 +9,7 @@ export default function Index({ ip }: { ip: string }) {
 export const getServerSideProps = (async context => {
     const forwarded = context.req.headers['x-forwarded-for'];
     const ip = forwarded
-        ? (forwarded as string).split(/, /)[0]
+        ? forwarded.split(/, /)[0]
         : context.req.socket.remoteAddress;
 
     return {
@@ -20,4 +17,4 @@ export const getServerSideProps = (async context => {
             ip,
         },
     };
-}) satisfies GetServerSideProps;
+});
